@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Communication & Cloud Share</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2" style="background: rgba(16, 185, 129, 0.1);"></div>
+
+    <div class="container main-app">
+        <div class="header">
+            <h1>Communicate & Share</h1>
+            <!-- <p>Real-Time WebRTC Video & Chunk-Based File Transfer</p> -->
+        </div>
+
+        <!-- App Mode Selection / Dashboard -->
+        <div id="modeSelectionSection" class="section dashboard-ui">
+            <div class="dash-welcome">
+                <h2>Welcome back</h2>
+                <p>Your digital workspace is ready. Choose an app to get started.</p>
+            </div>
+            <div class="dash-grid">
+                <div class="dash-card" id="modeFileOnlyBtn">
+                    <div class="dash-icon" style="background: #2563eb;">📂</div>
+                    <h3>Files</h3>
+                    <p>Manage cloud storage</p>
+                </div>
+                <div class="dash-card" id="modeVideoCallBtn">
+                    <div class="dash-icon" style="background: #10b981;">📹</div>
+                    <h3>Video Call</h3>
+                    <p>HD conferencing</p>
+                </div>
+                <div class="dash-card" id="modeAudioCallBtn">
+                    <div class="dash-icon" style="background: #f59e0b;">🎧</div>
+                    <h3>Audio Call</h3>
+                    <p>Crystal clear voice</p>
+                </div>
+                <div class="dash-card" id="modePrivateChatBtn">
+                    <div class="dash-icon" style="background: #8b5cf6;">💬</div>
+                    <h3>Private Chat</h3>
+                    <p>End-to-end encrypted</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Room setup (Dashboard Style) -->
+        <div id="roomSection" class="section room-setup-ui" style="display: none;">
+            <div class="room-setup-header">
+                <h2>Communicate & Share</h2>
+                <p>Start a new high-speed collaboration session or join an existing room with a secure access code.</p>
+            </div>
+            <div class="room-setup-cards">
+                <!-- Start Session -->
+                <div class="setup-card">
+                    <div class="setup-icon" style="background: rgba(37, 99, 235, 0.1); color: #3b82f6;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-radio">
+                            <path d="M4.9 19.1C3.1 17.3 2 14.8 2 12c0-2.8 1.1-5.3 2.9-7.1" />
+                            <path d="M8.4 15.6c-.9-.9-1.4-2.1-1.4-3.6s.4-2.7 1.4-3.6" />
+                            <circle cx="12" cy="12" r="2" />
+                            <path d="M15.6 15.6c.9-.9 1.4-2.1 1.4-3.6s-.4-2.7-1.4-3.6" />
+                            <path d="M19.1 19.1c1.8-1.8 2.9-4.3 2.9-7.1 0-2.8-1.1-5.3-2.9-7.1" />
+                        </svg>
+                    </div>
+                    <h3>Start a Session</h3>
+                    <p>Generate a unique room ID instantly and invite others to collaborate in real-time on your cloud
+                        workspace.</p>
+                    <div class="setup-card-bottom">
+                        <button id="createRoomBtn" class="btn btn-primary btn-block">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                style="margin-right: 8px;">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M8 12h8" />
+                                <path d="M12 8v8" />
+                            </svg> Create Room
+                        </button>
+                        <div class="setup-badge">🔒 SECURE HOST PROTOCOL</div>
+                    </div>
+                </div>
+
+                <!-- Join Session -->
+                <div class="setup-card">
+                    <div class="setup-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                            <polyline points="10 17 15 12 10 7" />
+                            <line x1="15" y1="12" x2="3" y2="12" />
+                        </svg>
+                    </div>
+                    <h3>Join a Session</h3>
+                    <p>Enter a specific code shared by a host to securely enter their room and start sharing resources.
+                    </p>
+                    <div class="setup-card-bottom">
+                        <div class="input-with-icon">
+                            <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <path
+                                    d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
+                            </svg>
+                            <input type="text" id="roomIdInput" class="input-field" placeholder="e.g., ABC-123-XYZ">
+                        </div>
+                        <button id="joinRoomBtn" class="btn btn-secondary btn-block" style="margin-top: 10px;">
+                            Join Room <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                style="margin-left: 8px;">
+                                <polygon points="5 3 19 12 5 21 5 3" />
+                            </svg>
+                        </button>
+                        <div class="setup-badge">🔒 ENCRYPTED CONNECTION</div>
+                    </div>
+                </div>
+            </div>
+            <div class="setup-footer">
+                <span>
+                    <div class="status-dot green"></div> Platform Online
+                </span>
+                <span style="color: #3b82f6;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" style="margin-right:4px;">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg> 1,240 Active Rooms</span>
+                <span style="color: #3b82f6;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" style="margin-right:4px;">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg> 24ms Avg Latency</span>
+            </div>
+        </div>
+
+        <!-- Main Interface (Hidden until joined) -->
+        <div id="mainInterfaceSection" class="section" style="display: none;">
+
+            <div class="room-info">
+                Room ID: <strong id="currentRoomDisplay" style="color:var(--accent);"></strong>
+            </div>
+
+            <!-- Video Calling UI (WhatsApp Style) -->
+            <div class="video-container whatsapp-style" id="videoContainer">
+                <video id="remoteVideo" class="video-player remote-full" autoplay playsinline></video>
+                <div class="local-pip">
+                    <video id="localVideo" class="video-player" autoplay playsinline muted></video>
+                </div>
+
+                <div class="call-controls-overlay">
+                    <button id="startCallBtn" class="btn btn-success" style="border-radius:24px;" disabled>Call</button>
+                    <button id="micToggleBtn" class="btn btn-control">🎤</button>
+                    <button id="videoToggleBtn" class="btn btn-control">📹</button>
+                    <button id="endCallBtn" class="btn btn-danger" style="border-radius:24px;" disabled>End</button>
+                </div>
+            </div>
+
+            <!-- File Sharing UI -->
+            <div class="file-sharing-container">
+                <h3>Share File in Room</h3>
+
+                <div class="upload-area" id="dropZone">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 4L12 16M12 4L8 8M12 4L16 8M4 17L4 19C4 20.1046 4.89543 21 6 21L18 21C19.1046 21 20 20.1046 20 19L20 17"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <p>Select or Drop File</p>
+                </div>
+                <input type="file" id="fileInput" style="display: none;">
+
+                <div id="fileInfoContainer" style="display: none; margin: 15px 0;">
+                    <!-- File details here -->
+                </div>
+
+                <button id="uploadBtn" class="btn" style="width: 100%; margin-bottom: 10px;" disabled>Upload
+                    File</button>
+
+                <!-- Sender Progress -->
+                <div class="progress-box" id="uploadProgressBox" style="display:none;">
+                    <div class="progress-header">Uploading... <span id="uploadPercent">0%</span></div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="uploadFill"></div>
+                    </div>
+                </div>
+
+                <!-- Receiver Progress -->
+                <div class="progress-box" id="downloadProgressBox" style="display:none; border-color: var(--success);">
+                    <div class="progress-header">Receiving File... <span id="downloadPercent">0%</span></div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="downloadFill" style="background: var(--success);"></div>
+                    </div>
+                    <button class="btn btn-success" id="saveFileBtn"
+                        style="display:none; margin-top: 10px; width: 100%;">Save File to Device</button>
+                </div>
+            </div>
+
+            <!-- Ephemeral Chat UI -->
+            <div class="chat-container">
+                <h3>Private Chat <span style="font-size: 11px; color: var(--error);">(Self-Destructs)</span></h3>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="status-msg" style="font-size: 12px; margin-top:0;">Messages are not saved on the server.
+                    </div>
+                </div>
+                <div class="typing-indicator" id="typingIndicator">Peer is typing...</div>
+                <div class="chat-input-area">
+                    <input type="text" id="chatInput" class="input-field" placeholder="Type a message..."
+                        autocomplete="off">
+                    <button id="sendChatBtn" class="btn" style="padding: 12px; margin-left: 10px;">Send</button>
+                </div>
+            </div>
+
+            <div id="notificationArea" class="status-msg"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+    <!-- Combined app logic -->
+    <script src="/js/app.js"></script>
+</body>
+
+</html>
