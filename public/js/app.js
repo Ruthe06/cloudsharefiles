@@ -127,6 +127,17 @@ document.addEventListener('DOMContentLoaded', () => {
         mainInterfaceSection.style.display = 'block';
         currentRoomDisplay.innerText = currentRoom;
 
+        const roomLinkDisplay = document.getElementById('roomLinkDisplay');
+        if (roomLinkDisplay) {
+            let shareLink = '';
+            if (appMode === 'file_only') {
+                shareLink = `${window.location.origin}/receiver.html?id=${currentRoom}`;
+            } else {
+                shareLink = `${window.location.origin}/?room=${currentRoom}&mode=${appMode}`;
+            }
+            roomLinkDisplay.innerHTML = `Or share this link: <a href="${shareLink}" target="_blank" style="color: var(--accent); text-decoration: underline;">${shareLink}</a>`;
+        }
+
         notify('Joined room. Waiting for peers...');
         if (appMode === 'video' || appMode === 'audio') {
             initLocalStream(appMode === 'video');
@@ -371,7 +382,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const end = Math.min(start + CHUNK_SIZE, selectedFile.size);
             const chunk = selectedFile.slice(start, end);
 
-            const url = `/api/upload-chunk?fileId=${currentRoom}&chunkIndex=${i}&totalChunks=${totalChunks}&fileName=${encodeURIComponent(selectedFile.name)}&fileType=${encodeURIComponent(selectedFile.type)}`;
+            const url = `/api/upload-chunk?fileId=${currentRoom}&chunkIndex=${i}&totalChunks=${totalChunks}&fileName=${encodeURIComponent(selectedFile.name)}&fileType=${encodeURIComponent(selectedFile.type)}&senderId=${socket.id}`;
 
             try {
                 const response = await fetch(url, {
@@ -405,6 +416,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // FILE SHARING (RECEIVER)
     // ==========================================
     socket.on('chunk_received', (data) => {
+        if (data.senderId === socket.id) return; // Prevent sender from downloading own file
+
         downloadProgressBox.style.display = 'block';
         saveFileBtn.style.display = 'none'; // reset just in case
 
@@ -485,4 +498,17 @@ document.addEventListener('DOMContentLoaded', () => {
         receivedChunksCount = 0;
         fileChunksData = [];
     }
+
+    // ==========================================
+    // AUTO-JOIN FROM URL PARAMS
+    // ==========================================
+    const urlParams = new URLSearchParams(window.location.search);
+    const roomParam = urlParams.get('room');
+    const modeParam = urlParams.get('mode');
+
+    if (roomParam && modeParam) {
+        setupAppMode(modeParam);
+        joinRoom(roomParam);
+    }
+
 });

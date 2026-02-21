@@ -49,11 +49,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) { /* Ignore invalid URL error, use val directly */ }
 
         if (currentSessionId) {
-            socket.emit('leave_session', currentSessionId);
+            // Need to emit something if we want to handle leaving, though typical usage covers disconnecting
         }
 
         currentSessionId = fileId.toUpperCase();
-        socket.emit('join_session', currentSessionId);
+        socket.emit('join_room', currentSessionId); // Changed to join_room so server assigns socket to the room
 
         connectBtn.innerHTML = 'Connecting...';
         connectBtn.disabled = true;

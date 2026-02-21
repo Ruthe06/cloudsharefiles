@@ -97,7 +97,8 @@ app.post('/api/upload-chunk', express.raw({ type: '*/*', limit: '50mb' }), async
             totalChunks: parseInt(totalChunks),
             chunkUrl,
             fileName,
-            fileType
+            fileType,
+            senderId: req.query.senderId
         });
 
         res.json({ success: true, url: chunkUrl });

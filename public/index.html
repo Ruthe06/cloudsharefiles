@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real-Time Communication & Cloud Share</title>
+    <title>Creva Stream | By Creva Solutions</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
@@ -14,8 +14,14 @@
 
     <div class="container main-app">
         <div class="header">
-            <h1>Communicate & Share</h1>
-            <!-- <p>Real-Time WebRTC Video & Chunk-Based File Transfer</p> -->
+            <h1>
+                <span
+                    style="display: block; font-size: 12px; color: var(--text-secondary); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; font-weight: 600;">By
+                    Creva Solutions</span>
+                <span
+                    style="font-size: 32px; background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Creva
+                    Stream</span>
+            </h1>
         </div>
 
         <!-- App Mode Selection / Dashboard -->
@@ -51,7 +57,7 @@
         <!-- Room setup (Dashboard Style) -->
         <div id="roomSection" class="section room-setup-ui" style="display: none;">
             <div class="room-setup-header">
-                <h2>Communicate & Share</h2>
+                <h2>Creva Stream Workspace</h2>
                 <p>Start a new high-speed collaboration session or join an existing room with a secure access code.</p>
             </div>
             <div class="room-setup-cards">
@@ -141,6 +147,8 @@
 
             <div class="room-info">
                 Room ID: <strong id="currentRoomDisplay" style="color:var(--accent);"></strong>
+                <div id="roomLinkDisplay"
+                    style="margin-top: 8px; font-size: 14px; color: var(--text-secondary); font-weight: normal;"></div>
             </div>
 
             <!-- Video Calling UI (WhatsApp Style) -->
@@ -218,7 +226,6 @@
     </div>
 
     <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
-    <!-- Combined app logic -->
     <script src="/js/app.js"></script>
 </body>
 
